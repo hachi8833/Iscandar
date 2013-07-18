@@ -78,7 +78,7 @@ class Iscandar
 		sleep 1
 
 		puts "It's #{RED}#{WEATHER[result]}!#{SO}"
-
+		sleep 0.5
 		if sell > RATE[result] then
 			lost = sell - RATE[result]
 			sell -= lost
