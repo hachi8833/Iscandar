@@ -8,20 +8,20 @@
 #売れなかった分は損失となる。
 #あなたは天気予報を見て、明日いくつのトーフを製造するかを決めねばならない。
 class Iscandar
-	private show_comment
-	attr_accessor :total, :lost
-	def initialize
-		COST = 10
-		PRICE = 12
-		RED = "\e[31m"
-		GRN = "\e[32m"
-		SO = "\e[m"
-		@input = []
-		@total = 1000
-		@sell = 0
-		@lost = 0
+	COST = 10
+	PRICE = 12
+	WEATHER = {fine: "Fine", cloudy: "Cloudy", rainy: "Rainy"}
+	RATE = {fine: 100, cloudy: 50, rainy: 10}
+	RED = "\e[31m"
+	GRN = "\e[32m"
+	SO = "\e[m"
 
-		show_comment
+	def initialize
+		@forecast = {}
+		@total = 1000
+
+		self.show_comment
+		puts
 		puts "Now you have #{GRN}#{@total}#{SO} yen. "
 	end
 
@@ -31,7 +31,7 @@ class Iscandar
 		puts (`cat #{file} | grep "^#"`).delete("#")
 	end
 
-	def calc
+	def calc_probab
 		probab = {}
 		probab[:fine] = rand(100)
 		probab[:cloudy]= rand(100 - probab[:fine])
@@ -45,9 +45,10 @@ class Iscandar
 			input = gets
 			if  /[0-9]+/ =~ input.to_s and input.to_i > 0 then
 				puts "Tofu you made: #{input}"
-				@input = input.to_i
+				return input.to_i
 				break
 			elsif input == "exit\n" then
+				puts "You gained #{@total} yen so far."
 				puts "Good Bye!"
 				exit
 			else
@@ -61,56 +62,50 @@ class Iscandar
 		puts "-" * 80
 		puts "Weather Forecast"
 		print "Probability: "
-		infer = calc
-		print "Fine: #{infer[:fine]}%, Cloudy: #{infer[:cloudy]}%, Rainy: #{infer[:rainy]}%.\n"
+		@forecast = calc_probab
+		print "Fine: #{@forecast[:fine]}%, Cloudy: #{@forecast[:cloudy]}%, Rainy: #{@forecast[:rainy]}%.\n"
 		puts "-" * 80
+		puts
 	end
 
-	def next_day
-		nextday = calc
-		result = {}
-		nextday.each_pair {|i,j| result[i] = j * infer[i]}
-		final = result.sort {|a, b| b[1] <=> a[1]}
-		p final
+	def next_day(sell: 100)
+		lost = 0
+		tmp2 = {}
+		tmp1 = calc_probab
+		tmp1.each_pair {|i,j| tmp2[i] = j * @forecast[i]}
+		nextday = tmp2.sort {|a, b| b[1] <=> a[1]}
+		result = nextday[0][0] #extract the result
 		sleep 1
-		case final[0][0]
-		when :fine
-			puts "It's #{RED}Fine!#{SO}"
-			if sell > 100 then
-				lost = sell - 100
-				sell -= lost
-			end
-			total = total + (sell * PRICE) - (lost * COST)
-		when :cloudy
-			puts "It's #{RED}Cloudy!#{SO}"
-			if sell > 50 then
-				lost = sell - 50
-				sell -= lost
-			end
-			total = total + (sell * PRICE) - (lost * COST)
-		when :rainy
-			puts "It's #{RED}Raining!#{SO}"
-			if sell > 10 then
-				lost = sell - 10
-				sell -= lost
-			end
-			lost = sell - 10 if sell > 10
-			total = total + (sell * PRICE) - (lost * COST)
+
+		puts "It's #{RED}#{WEATHER[result]}!#{SO}"
+
+		if sell > RATE[result] then
+			lost = sell - RATE[result]
+			sell -= lost
 		end
+		@total = @total + (sell * PRICE) - (lost * COST)
+
 		puts "You sold #{GRN}#{sell}#{SO} Tofu and totaled #{GRN}#{sell * PRICE}#{SO} yen."
 		puts "You lost #{RED}#{lost}#{SO} Tofu and lost #{RED}#{lost * COST}#{SO} yen."
-		puts "Now you have #{GRN}#{total}#{SO} yen. "
+		puts "Now you have #{GRN}#{@total}#{SO} yen. "
 		puts
+
+		if @total < 0 then
+			puts "...Your capital has been shortened. Bad ending. Bye."
+			exit
+		end
+	end
+
+	def run
+		while @total < 30000
+			self.weather_forecast
+			self.next_day(sell: self.wait_for_input)
+		end
+
+		puts "Congratulation! You gained #{@total} yen. Bye."
+		exit
 	end
 end
 
 obj = Iscandar.new
-
-while obj.total < 30000
-	obj.lost = 0
-	obj.weather_forecast
-	obj.wait_for_input
-	obj.next_day
-end
-
-puts "Congratulation! You totaled #{} yen. Bye."
+	obj.run
