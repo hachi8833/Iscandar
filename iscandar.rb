@@ -1,3 +1,6 @@
+#!/usr/bin/env ruby
+# -*- coding: utf-8 -*-
+
 #■イスカンダルのトーフ屋ゲーム■ (外部仕様より再現)
 #Copyright (C) 1978-2013 by N.Tsuda
 #Reference: http://vivi.dyndns.org/tofu/tofu.html
