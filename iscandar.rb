@@ -27,7 +27,7 @@ class Iscandar
   }
   RED = "\e[31m"
   GRN = "\e[32m"
-  SO = "\e[m"
+  SO  = "\e[m"
 
   def initialize
     @forecast = {}
@@ -80,6 +80,11 @@ class Iscandar
 
   def next_day(sell: 100)
     lost    = 0
+
+    # Do not use something like 'tmp' and 'result' that give no info to coders (including you!).
+    # The name of variables should contain the key information to understand (should be like a very short comment).
+    # So for example, use 'probablility' and 'prob_of_whether' that give information to understand.
+    # See 'The Art of Readable Code' for details.
     tmp2    = {}
     tmp1    = calc_probab
     tmp1.each_pair {|i,j| tmp2[i] = j * @forecast[i]}
