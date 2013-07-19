@@ -86,7 +86,7 @@ class Iscandar
 		end
 		@total = @total + (sell * PRICE) - (lost * COST)
 
-		puts "You sold #{GRN}#{sell}#{SO} Tofu and totaled #{GRN}#{sell * PRICE}#{SO} yen."
+		puts "You sold #{GRN}#{sell}#{SO} Tofu and gained #{GRN}#{sell * PRICE}#{SO} yen."
 		puts "You lost #{RED}#{lost}#{SO} Tofu and lost #{RED}#{lost * COST}#{SO} yen."
 		sleep 0.5
 		puts "Now you have #{GRN}#{@total}#{SO} yen. "
