@@ -13,17 +13,25 @@
 #あなたは天気予報を見て、明日いくつのトーフを製造するかを決めねばならない。
 
 class Iscandar
-  COST = 10
-  PRICE = 12
-  WEATHER = {fine: "Fine", cloudy: "Cloudy", rainy: "Rainy"}
-  RATE = {fine: 100, cloudy: 50, rainy: 10}
+  COST    = 10
+  PRICE   = 12
+  WEATHER = {
+    fine:   "Fine",
+    cloudy: "Cloudy",
+    rainy:   "Rainy"
+  }
+  RATE    = {
+    fine:   100,
+    cloudy:  50,
+    rainy:   10
+  }
   RED = "\e[31m"
   GRN = "\e[32m"
   SO = "\e[m"
 
   def initialize
     @forecast = {}
-    @total = 1000
+    @total    = 1000
 
     self.show_comment
   end
@@ -34,10 +42,10 @@ class Iscandar
   end
 
   def calc_probab
-    probab = {}
-    probab[:fine] = rand(100)
-    probab[:cloudy]= rand(100 - probab[:fine])
-    probab[:rainy] = 100 - probab[:fine] - probab[:cloudy]
+    probab          = {}
+    probab[:fine]   = rand(100)
+    probab[:cloudy] = rand(100 - probab[:fine])
+    probab[:rainy]  = 100      - probab[:fine] - probab[:cloudy]
     return probab
   end
 
@@ -71,12 +79,12 @@ class Iscandar
   end
 
   def next_day(sell: 100)
-    lost = 0
-    tmp2 = {}
-    tmp1 = calc_probab
+    lost    = 0
+    tmp2    = {}
+    tmp1    = calc_probab
     tmp1.each_pair {|i,j| tmp2[i] = j * @forecast[i]}
     nextday = tmp2.sort {|a, b| b[1] <=> a[1]}
-    result = nextday[0][0] #extract the result
+    result  = nextday[0][0] #extract the result
     sleep 1
 
     puts "It's #{RED}#{WEATHER[result]}!#{SO}"
