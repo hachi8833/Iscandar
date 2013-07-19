@@ -22,13 +22,10 @@ class Iscandar
 		@total = 1000
 
 		self.show_comment
-		puts
-		puts "Now you have #{GRN}#{@total}#{SO} yen. "
 	end
 
 	def show_comment
 		file = File.basename(__FILE__)
-		puts file
 		puts (`cat #{file} | grep "^#"`).delete("#")
 	end
 
@@ -99,6 +96,8 @@ class Iscandar
 	end
 
 	def run
+		puts
+		puts "Now you have #{GRN}#{@total}#{SO} yen. "
 		while @total < 30000
 			self.weather_forecast
 			self.next_day(sell: self.wait_for_input)
