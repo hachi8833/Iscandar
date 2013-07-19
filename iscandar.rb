@@ -1,5 +1,6 @@
 #■イスカンダルのトーフ屋ゲーム■ (外部仕様より再現)
 #Copyright (C) 1978-2013 by N.Tsuda
+#Reference: http://vivi.dyndns.org/tofu/tofu.html
 #背景: あなたはイスカンダル星で遭難し、帰りの費用を稼ぐためにトーフをなるべくたくさん売ってお金を稼がなければならない。
 #最初に所持金1000円が与えられる。
 #30000円儲けることができれば、めでたくイスカンダルから脱出することができる。
@@ -87,6 +88,7 @@ class Iscandar
 
 		puts "You sold #{GRN}#{sell}#{SO} Tofu and totaled #{GRN}#{sell * PRICE}#{SO} yen."
 		puts "You lost #{RED}#{lost}#{SO} Tofu and lost #{RED}#{lost * COST}#{SO} yen."
+		sleep 0.5
 		puts "Now you have #{GRN}#{@total}#{SO} yen. "
 		puts
 
