@@ -85,19 +85,22 @@ class Iscandar
     # The name of variables should contain the key information to understand (should be like a very short comment).
     # So for example, use 'probablility' and 'prob_of_whether' that give information to understand.
     # See 'The Art of Readable Code' for details.
-    tmp2    = {}
-    tmp1    = calc_probab
-    tmp1.each_pair {|i,j| tmp2[i] = j * @forecast[i]}
-    nextday = tmp2.sort {|a, b| b[1] <=> a[1]}
-    result  = nextday[0][0] #extract the result
-    sleep 1
+    
+    #Revised based on the suggestion above.
+  	lost              = 0
+		weighted_weather  = {}
+		next_weather      = calc_probab
+		next_weather.each_pair {|i,j| weighted_weather[i] = j * @forecast[i]}
+		sorted_weather    = weighted_weather.sort {|a, b| b[1] <=> a[1]}
+		actual_weather    = sorted_weather.first.first #extract the result
+		sleep 1
 
-    puts "It's #{RED}#{WEATHER[result]}!#{SO}"
-    sleep 0.5
-    if sell > RATE[result] then
-      lost = sell - RATE[result]
-      sell -= lost
-    end
+		puts "It's #{RED}#{WEATHER[actual_weather]}!#{SO}"
+		sleep 0.5
+		if sell > RATE[actual_weather] then
+			lost = sell - RATE[actual_weather]
+			sell -= lost
+		end
     @total = @total + (sell * PRICE) - (lost * COST)
 
     puts "You sold #{GRN}#{sell}#{SO} Tofu and gained #{GRN}#{sell * PRICE}#{SO} yen."
