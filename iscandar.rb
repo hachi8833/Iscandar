@@ -15,11 +15,6 @@
 class Iscandar
   COST    = 10
   PRICE   = 12
-  WEATHER = {
-    fine:   "Fine",
-    cloudy: "Cloudy",
-    rainy:   "Rainy"
-  }
   RATE    = {
     fine:   100,
     cloudy:  50,
@@ -87,20 +82,20 @@ class Iscandar
     # See 'The Art of Readable Code' for details.
     
     #Revised based on the suggestion above.
-  	lost              = 0
-		weighted_weather  = {}
-		next_weather      = calc_probab
-		next_weather.each_pair {|i,j| weighted_weather[i] = j * @forecast[i]}
-		sorted_weather    = weighted_weather.sort {|a, b| b[1] <=> a[1]}
-		actual_weather    = sorted_weather.first.first #extract the result
-		sleep 1
+    lost              = 0
+    weighted_weather  = {}
+    next_weather      = calc_probab
+    next_weather.each_pair {|i,j| weighted_weather[i] = j * @forecast[i]}
+    sorted_weather    = weighted_weather.sort {|a, b| b[1] <=> a[1]}
+    actual_weather    = sorted_weather.first.first #extract the result
+    sleep 1
 
-		puts "It's #{RED}#{WEATHER[actual_weather]}!#{SO}"
-		sleep 0.5
-		if sell > RATE[actual_weather] then
-			lost = sell - RATE[actual_weather]
-			sell -= lost
-		end
+    puts "It's #{RED}#{actual_weather}!#{SO}"
+    sleep 0.5
+    if sell > RATE[actual_weather] then
+      lost = sell - RATE[actual_weather]
+      sell -= lost
+    end
     @total = @total + (sell * PRICE) - (lost * COST)
 
     puts "You sold #{GRN}#{sell}#{SO} Tofu and gained #{GRN}#{sell * PRICE}#{SO} yen."
