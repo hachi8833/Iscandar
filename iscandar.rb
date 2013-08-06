@@ -1,16 +1,16 @@
 #!/usr/bin/env ruby
 # -*- coding: utf-8 -*-
 
-#■イスカンダルのトーフ屋ゲーム■ (外部仕様より再現)
-#Copyright (C) 1978-2013 by N.Tsuda
-#Reference: http://vivi.dyndns.org/tofu/tofu.html
-#背景: あなたはイスカンダル星で遭難し、帰りの費用を稼ぐためにトーフをなるべくたくさん売ってお金を稼がなければならない。
-#最初に所持金1000円が与えられる。
-#30000円儲けることができれば、めでたくイスカンダルから脱出することができる。
-#トーフは製造に一個あたり10円かかり、一個あたり12円で売ることができる。
-#トーフは晴れの日は100個、曇りの日は50個、雨の日は10個売れる。
-#売れなかった分は損失となる。
-#あなたは天気予報を見て、明日いくつのトーフを製造するかを決めねばならない。
+##■イスカンダルのトーフ屋ゲーム■ (外部仕様より再現)
+##Copyright (C) 1978-2013 by N.Tsuda
+##Reference: http://vivi.dyndns.org/tofu/tofu.html
+##背景: あなたはイスカンダル星で遭難し、帰りの費用を稼ぐためにトーフをなるべくたくさん売ってお金を稼がなければならない。
+##最初に所持金1000円が与えられる。
+##30000円儲けることができれば、めでたくイスカンダルから脱出することができる。
+##トーフは製造に一個あたり10円かかり、一個あたり12円で売ることができる。
+##トーフは晴れの日は100個、曇りの日は50個、雨の日は10個売れる。
+##売れなかった分は損失となる。
+##あなたは天気予報を見て、明日いくつのトーフを製造するかを決めねばならない。
 
 class Iscandar
   COST    = 10
@@ -33,7 +33,7 @@ class Iscandar
 
   def show_comment
     file = File.basename(__FILE__)
-    puts (`cat #{file} | grep "^#"`).delete("#")
+    puts (`cat #{file} | grep "^##"`).delete("##")
   end
 
   def calc_probab
@@ -80,7 +80,7 @@ class Iscandar
     # The name of variables should contain the key information to understand (should be like a very short comment).
     # So for example, use 'probablility' and 'prob_of_whether' that give information to understand.
     # See 'The Art of Readable Code' for details.
-    
+
     #Revised based on the suggestion above.
     lost              = 0
     weighted_weather  = {}
