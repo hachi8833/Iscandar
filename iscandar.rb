@@ -95,8 +95,7 @@ class Iscandar
     weighted_weather  = {}
     next_weather      = calc_probab
     next_weather.each_pair {|i,j| weighted_weather[i] = j * @forecast[i]}
-    sorted_weather    = weighted_weather.sort {|a, b| b[1] <=> a[1]}
-    actual_weather    = sorted_weather.first.first #extract the result
+    actual_weather    = (weighted_weather.max {|a, b| b[1] <=> a[1]})[0]
     sleep 1
 
     puts "It's #{RED}#{actual_weather}!#{SO}"
