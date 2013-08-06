@@ -11,6 +11,15 @@
 ##トーフは晴れの日は100個、曇りの日は50個、雨の日は10個売れる。
 ##売れなかった分は損失となる。
 ##あなたは天気予報を見て、明日いくつのトーフを製造するかを決めねばならない。
+##
+##A Tofu vendor surviving in Iscandar
+##Copyright (C) 1978-2013 by N.Tsuda
+##Reference: http://vivi.dyndns.org/tofu/tofu.html
+##Background: You are a castaway in planet Iscandar in outer space, and you have to gain money by making and selling Tofu in order to go back to your mother planet.
+##Initially you have 1,000 yen. The goal is to gain 30,000 yen for your traveling fee.
+##One Tofu costs 10 yen for production, and the unit price is 12 yen.
+##The sales of Tofu depends on weather: you can sell 100 Tofu on a fine day, 50 on a cloudy day, and 10 on a rainy day.
+##Watch weather forecast and determine the quantity of Tofu you are going to make.
 
 class Iscandar
   COST    = 10
